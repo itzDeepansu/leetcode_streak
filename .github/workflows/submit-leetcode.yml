@@ -1,0 +1,29 @@
+name: Submit LeetCode Solution
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Playwright
+      run: npm install playwright
+
+    - name: Run submit script
+      run: node scripts/submit.js
+      env:
+        LEETCODE_USERNAME: ${{ secrets.LEETCODE_USERNAME }}
+        LEETCODE_PASSWORD: ${{ secrets.LEETCODE_PASSWORD }}
